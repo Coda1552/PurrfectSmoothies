@@ -52,16 +52,21 @@ public class BlenderBlock extends BaseEntityBlock {
 
         if (stack.is(PSTags.SMOOTHIE_INGREDIENT) && level.getBlockEntity(pos) instanceof BlenderBlockEntity blender) {
 
-            int i = blender.getItems().size();
-            blender.setItem(1, stack);
+            int currentItems = blender.countItems();
 
-            stack.shrink(1);
+            if (currentItems < 5) {
+                blender.setItem(currentItems + 1, stack);
+            }
+
+            if (!player.isCreative()) stack.shrink(1);
 
             return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }
 
+
+    // todo - fix the break bug. maybe its because cuz i dont have a container?
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity be = worldIn.getBlockEntity(pos);
@@ -73,4 +78,5 @@ public class BlenderBlock extends BaseEntityBlock {
             super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
+
 }

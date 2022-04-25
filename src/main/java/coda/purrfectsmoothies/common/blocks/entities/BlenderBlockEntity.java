@@ -15,10 +15,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlenderBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
     public static int slots = 5;
     public int blendingTicks;
+    public List<ItemStack> stacks;
 
     public BlenderBlockEntity(BlockPos pos, BlockState state) {
         super(PSBlockEntities.BLENDER.get(), pos, state);
@@ -56,6 +60,19 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity {
     @Override
     public NonNullList<ItemStack> getItems() {
         return this.items;
+    }
+
+    public int countItems() {
+        List<ItemStack> currentStacks = new ArrayList<>();
+
+        if (stacks == null) {
+            return 0;
+        }
+        for (ItemStack newStack : stacks) {
+            currentStacks.add(newStack);
+        }
+
+        return currentStacks.size();
     }
 
     @Override
