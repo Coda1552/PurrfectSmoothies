@@ -37,6 +37,7 @@ public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEnt
         return RenderType.entityTranslucent(textureLocation);
     }
 
+    // todo - make the items rotate with the blender's animation
     @Override
     public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int packedLightIn) {
         int items = te.countItems(te.getItems());
