@@ -15,12 +15,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlenderBlockEntity extends RandomizableContainerBlockEntity implements IAnimatable {
     private NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
+    private final AnimationFactory factory = new AnimationFactory(this);
     public static int slots = 5;
     public int blendingTicks;
 
@@ -111,5 +114,15 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
                 blender.blendingTicks = 0;
             }
         }*/
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
     }
 }

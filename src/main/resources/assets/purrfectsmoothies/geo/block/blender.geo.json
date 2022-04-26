@@ -1,0 +1,35 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.blender",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "bone",
+					"pivot": [0, 0.125, 0],
+					"cubes": [
+						{"origin": [-4, 0, -4], "size": [8, 3, 8], "uv": [0, 14]},
+						{"origin": [-5, 12, -5], "size": [10, 3, 10], "uv": [0, 0]},
+						{"origin": [-3, 3, -3], "size": [6, 3, 6], "uv": [32, 14]},
+						{"origin": [-4, 6, -4], "size": [8, 6, 8], "uv": [0, 25]}
+					]
+				},
+				{
+					"name": "blade",
+					"parent": "bone",
+					"pivot": [0, 3.5, 0],
+					"cubes": [
+						{"origin": [-3, 3.5, -3], "size": [6, 0, 6], "uv": [26, 27]}
+					]
+				}
+			]
+		}
+	]
+}
