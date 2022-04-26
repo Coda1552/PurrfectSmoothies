@@ -14,7 +14,7 @@ public class BlenderModel extends AnimatedGeoModel<BlenderBlockEntity> {
 
 	@Override
 	public ResourceLocation getModelLocation(BlenderBlockEntity animatable) {
-		return new ResourceLocation(PurrfectSmoothies.MOD_ID, "geo/blender.geo.json");
+		return new ResourceLocation(PurrfectSmoothies.MOD_ID, "geo/block/blender.geo.json");
 	}
 
 	@Override

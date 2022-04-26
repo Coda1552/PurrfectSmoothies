@@ -7,6 +7,7 @@ import coda.purrfectsmoothies.registry.PSBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -16,8 +17,11 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(PSBlockEntities.BLENDER.get(), BlenderBlockEntityRenderer::new);
-
         ItemBlockRenderTypes.setRenderLayer(PSBlocks.BLENDER.get(), RenderType.cutout());
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(PSBlockEntities.BLENDER.get(), BlenderBlockEntityRenderer::new);
     }
 }
