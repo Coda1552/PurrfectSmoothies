@@ -12,11 +12,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class BlenderBlockEntityRenderer implements BlockEntityRenderer<BlenderBlockEntity> {
     private static final float[][] TRANSFORMATIONS = new float[][] {
-            {0.425f},
             {0.45f},
-            {0.475f},
             {0.5f},
-            {0.525f},
+            {0.55f},
+            {0.6f},
+            {0.65f},
     };
     private final Minecraft mc = Minecraft.getInstance();
 
