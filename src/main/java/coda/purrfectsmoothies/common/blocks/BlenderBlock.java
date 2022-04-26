@@ -56,7 +56,7 @@ public class BlenderBlock extends BaseEntityBlock {
 
             System.out.println(currentItems);
 
-            if (currentItems <= 5) {
+            if (currentItems < 5) {
                 blender.setItem(currentItems, stack);
             }
 
