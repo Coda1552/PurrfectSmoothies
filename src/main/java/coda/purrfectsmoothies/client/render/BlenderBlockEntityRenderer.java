@@ -20,11 +20,11 @@ import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
 public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEntity> {
     private static final float[][] TRANSFORMATIONS = new float[][] {
-            {0.45f},
-            {0.5f},
-            {0.55f},
-            {0.6f},
-            {0.65f},
+            {0.45f, 0.5f},
+            {0.5f, 0.4f},
+            {0.55f, 0.3f},
+            {0.6f, 0.2f},
+            {0.65f, 0.1f},
     };
     private final Minecraft mc = Minecraft.getInstance();
 
@@ -37,7 +37,7 @@ public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEnt
         return RenderType.entityTranslucent(textureLocation);
     }
 
-    // todo - make the items rotate with the blender's animation
+    // todo - make the items rotate
     @Override
     public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int packedLightIn) {
         int items = te.countItems(te.getItems());
@@ -48,10 +48,11 @@ public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEnt
             final ItemStack stack = te.getItem(i);
 
             ms.pushPose();
+            ms.translate(0.5, transformation[0], 0.5);
+//            ms.scale(0.5f, 0.5f, 0.5f);
             ms.mulPose(Vector3f.YN.rotationDegrees(te.blendingTicks * 15));
-            ms.mulPose(Vector3f.XP.rotationDegrees(90));
-            ms.translate(0.5, 0.45, transformation[0] - 1);
-            ms.scale(0.65f, 0.65f, 0.65f);
+            ms.mulPose(Vector3f.XN.rotation(transformation[0]));
+            //ms.mulPose(Vector3f.XP.rotationDegrees(90));
 
             BakedModel model = mc.getItemRenderer().getModel(stack, null, null, 0);
             mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GROUND, true, ms, bufferIn, packedLightIn, 0, model);

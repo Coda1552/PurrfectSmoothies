@@ -8,9 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -101,23 +104,23 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
 
     // todo - add isBlending
     public boolean isBlending() {
-        return true;
+        return !isEmpty() && level.hasNeighborSignal(worldPosition);
     }
 
     public static void tick(Level level, BlockPos position, BlockState state, BlenderBlockEntity blender) {
-    /*      if (blender.currentRecipe != null) {
+        if (blender.isBlending()) {
             if (++blender.blendingTicks >= 100) {
-                //Clear the inventory and remove the bottle
-                for (int i = 0; i <     9; i++) {
-                    blender.removeItem(i);
-                }
-                blender.getItem(9).shrink(1);
-                //Set the output
-                blender.setItem(10, blender.currentRecipe.assemble(blender));
-                blender.currentRecipe = null;
+
+                blender.clearContent();
+
                 blender.blendingTicks = 0;
+                ItemEntity item = EntityType.ITEM.create(level);
+                item.setItem(new ItemStack(Items.POTION));
+                item.moveTo(position, 0F, 0F);
+
+                blender.level.addFreshEntity(item);
             }
-        }*/
+        }
     }
 
     @Override
@@ -126,9 +129,11 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+/*
         if (isBlending()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.blender.blade_spin", true));
         }
+*/
         return PlayState.CONTINUE;
     }
 
