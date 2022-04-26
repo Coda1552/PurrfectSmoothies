@@ -30,8 +30,8 @@ public class BlenderBlock extends BaseEntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState p_49232_) {
-        return RenderShape.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
     }
 
     @Nullable
@@ -48,13 +48,9 @@ public class BlenderBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         ItemStack stack = player.getItemInHand(hand);
 
-        // todo- check to make sure the blender isnt full
-
         if (stack.is(PSTags.SMOOTHIE_INGREDIENT) && level.getBlockEntity(pos) instanceof BlenderBlockEntity blender) {
 
             int currentItems = blender.countItems(blender.getItems());
-
-            System.out.println(currentItems);
 
             if (currentItems < 5) {
                 blender.setItem(currentItems, stack);

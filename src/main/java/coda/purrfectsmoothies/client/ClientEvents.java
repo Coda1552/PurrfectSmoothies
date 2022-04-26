@@ -1,7 +1,7 @@
 package coda.purrfectsmoothies.client;
 
 import coda.purrfectsmoothies.PurrfectSmoothies;
-import coda.purrfectsmoothies.client.render.blockentity.BlenderBlockEntityRenderer;
+import coda.purrfectsmoothies.client.render.BlenderBlockEntityRenderer;
 import coda.purrfectsmoothies.registry.PSBlockEntities;
 import coda.purrfectsmoothies.registry.PSBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -16,7 +16,7 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(PSBlockEntities.BLENDER.get(), context -> new BlenderBlockEntityRenderer());
+        BlockEntityRenderers.register(PSBlockEntities.BLENDER.get(), BlenderBlockEntityRenderer::new);
 
         ItemBlockRenderTypes.setRenderLayer(PSBlocks.BLENDER.get(), RenderType.cutout());
     }

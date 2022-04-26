@@ -14,11 +14,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import software.bernie.geckolib3.core.IAnimatable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlenderBlockEntity extends RandomizableContainerBlockEntity {
+public class BlenderBlockEntity extends RandomizableContainerBlockEntity implements IAnimatable {
     private NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
     public static int slots = 5;
     public int blendingTicks;

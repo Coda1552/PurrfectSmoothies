@@ -1,5 +1,6 @@
-package coda.purrfectsmoothies.client.render.blockentity;
+package coda.purrfectsmoothies.client.render;
 
+import coda.purrfectsmoothies.client.model.BlenderModel;
 import coda.purrfectsmoothies.common.blocks.entities.BlenderBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
@@ -7,10 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemStack;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
-public class BlenderBlockEntityRenderer implements BlockEntityRenderer<BlenderBlockEntity> {
+public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEntity> {
     private static final float[][] TRANSFORMATIONS = new float[][] {
             {0.45f},
             {0.5f},
@@ -20,10 +24,12 @@ public class BlenderBlockEntityRenderer implements BlockEntityRenderer<BlenderBl
     };
     private final Minecraft mc = Minecraft.getInstance();
 
-    public BlenderBlockEntityRenderer() {}
+    public BlenderBlockEntityRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+        super(rendererDispatcherIn, new BlenderModel());
+    }
 
     @Override
-    public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int combinedLightIn, int p_112312_) {
+    public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int packedLightIn) {
         int items = te.countItems(te.getItems());
 
         for (int i = 0; i < items; i++) {
@@ -38,8 +44,9 @@ public class BlenderBlockEntityRenderer implements BlockEntityRenderer<BlenderBl
             ms.scale(0.65f, 0.65f, 0.65f);
 
             BakedModel model = mc.getItemRenderer().getModel(stack, null, null, 0);
-            mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GROUND, true, ms, bufferIn, combinedLightIn, p_112312_, model);
+            mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GROUND, true, ms, bufferIn, packedLightIn, 0, model);
             ms.popPose();
         }
     }
+
 }
