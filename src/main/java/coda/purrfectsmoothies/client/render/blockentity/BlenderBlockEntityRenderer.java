@@ -11,17 +11,30 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemStack;
 
 public class BlenderBlockEntityRenderer implements BlockEntityRenderer<BlenderBlockEntity> {
+    private static final float[][] TRANSFORMATIONS = new float[][] {
+            {0.425f},
+            {0.45f},
+            {0.475f},
+            {0.5f},
+            {0.525f},
+    };
     private final Minecraft mc = Minecraft.getInstance();
 
     public BlenderBlockEntityRenderer() {}
 
     @Override
     public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int combinedLightIn, int p_112312_) {
-        for (int i = 0; i < te.getContainerSize(); i++) {
+        int items = te.countItems(te.getItems());
+
+        for (int i = 0; i < items; i++) {
+
+            final float[] transformation = TRANSFORMATIONS[i];
             final ItemStack stack = te.getItem(i);
+
             ms.pushPose();
             ms.mulPose(Vector3f.YN.rotationDegrees(te.blendingTicks * 15));
             ms.mulPose(Vector3f.XP.rotationDegrees(90));
+            ms.translate(0.5, 0.45, transformation[0] - 1);
             ms.scale(0.65f, 0.65f, 0.65f);
 
             BakedModel model = mc.getItemRenderer().getModel(stack, null, null, 0);

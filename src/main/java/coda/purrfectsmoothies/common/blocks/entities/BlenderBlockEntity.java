@@ -22,7 +22,6 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
     public static int slots = 5;
     public int blendingTicks;
-    public List<ItemStack> stacks;
 
     public BlenderBlockEntity(BlockPos pos, BlockState state) {
         super(PSBlockEntities.BLENDER.get(), pos, state);
@@ -57,22 +56,21 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity {
         }
     }
 
-    @Override
-    public NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-
-    public int countItems() {
+    public int countItems(List<ItemStack> stacks) {
         List<ItemStack> currentStacks = new ArrayList<>();
 
-        if (stacks == null) {
-            return 0;
-        }
-        for (ItemStack newStack : stacks) {
-            currentStacks.add(newStack);
+        for (ItemStack stack : stacks) {
+            if (!stack.isEmpty()) {
+                currentStacks.add(stack);
+            }
         }
 
         return currentStacks.size();
+    }
+
+    @Override
+    public NonNullList<ItemStack> getItems() {
+        return this.items;
     }
 
     @Override

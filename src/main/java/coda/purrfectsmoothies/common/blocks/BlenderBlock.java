@@ -52,10 +52,12 @@ public class BlenderBlock extends BaseEntityBlock {
 
         if (stack.is(PSTags.SMOOTHIE_INGREDIENT) && level.getBlockEntity(pos) instanceof BlenderBlockEntity blender) {
 
-            int currentItems = blender.countItems();
+            int currentItems = blender.countItems(blender.getItems());
 
-            if (currentItems < 5) {
-                blender.setItem(currentItems + 1, stack);
+            System.out.println(currentItems);
+
+            if (currentItems <= 5) {
+                blender.setItem(currentItems, stack);
             }
 
             if (!player.isCreative()) stack.shrink(1);
