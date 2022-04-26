@@ -3,6 +3,109 @@
 	"animations": {
 		"animation.blender.blade_spin": {
 			"loop": true,
+			"animation_length": 8.04,
+			"bones": {
+				"bone": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.48": {
+							"vector": [0, 0, 0]
+						},
+						"2.64": {
+							"vector": ["Math.cos(query.anim_time * 360) * 7", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 7"],
+							"easing": "easeInQuint"
+						},
+						"3.2": {
+							"vector": ["Math.cos(query.anim_time * 360) * 12", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 12"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"3.76": {
+							"vector": ["Math.cos(query.anim_time * 360) * 7", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 7"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"4.24": {
+							"vector": ["Math.cos(query.anim_time * 360) * 12", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 12"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"4.76": {
+							"vector": ["Math.cos(query.anim_time * 360) * 7", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 7"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"5.28": {
+							"vector": ["Math.cos(query.anim_time * 360) * 12", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 12"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"5.84": {
+							"vector": ["Math.cos(query.anim_time * 360) * 7", "Math.cos(query.anim_time * 360) * 2", "Math.sin((query.anim_time -0.1) * 360) * 7"],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.75]
+						},
+						"7.24": {
+							"vector": [0, 0, 0],
+							"easing": "easeOutSine"
+						},
+						"8.0": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.48": {
+							"vector": [0, 0, 0]
+						},
+						"2.64": {
+							"vector": [0, 0, 0],
+							"easing": "easeInQuint"
+						},
+						"3.2": {
+							"vector": [0, 0.5, 0],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.5]
+						},
+						"3.76": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutBounce"
+						},
+						"4.24": {
+							"vector": [0, 0.5, 0],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.5]
+						},
+						"4.76": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutBounce"
+						},
+						"5.28": {
+							"vector": [0, 0.5, 0],
+							"easing": "easeInOutBounce",
+							"easingArgs": [0.5]
+						},
+						"5.84": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutBounce"
+						},
+						"7.24": {
+							"vector": [0, 0, 0],
+							"easing": "easeOutSine"
+						},
+						"8.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.blender.blade_spin2": {
+			"loop": true,
 			"animation_length": 8,
 			"bones": {
 				"blade": {

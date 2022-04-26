@@ -15,6 +15,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
@@ -97,14 +101,14 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
 
     // todo - add isBlending
     public boolean isBlending() {
-        return false;
+        return true;
     }
 
     public static void tick(Level level, BlockPos position, BlockState state, BlenderBlockEntity blender) {
     /*      if (blender.currentRecipe != null) {
             if (++blender.blendingTicks >= 100) {
                 //Clear the inventory and remove the bottle
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i <     9; i++) {
                     blender.removeItem(i);
                 }
                 blender.getItem(9).shrink(1);
@@ -118,7 +122,14 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
 
     @Override
     public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 2, this::predicate));
+    }
 
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (isBlending()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.blender.blade_spin", true));
+        }
+        return PlayState.CONTINUE;
     }
 
     @Override
