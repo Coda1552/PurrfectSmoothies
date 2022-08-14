@@ -103,7 +103,6 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
         return true;
     }
 
-    // todo - add isBlending
     public boolean isBlending() {
         return !isEmpty() && countItems(getItems()) == 5 /*&& level.hasNeighborSignal(worldPosition)*/;
     }

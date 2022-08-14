@@ -56,16 +56,22 @@ public class BlenderBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         ItemStack stack = player.getItemInHand(hand);
 
-        if (stack.is(PSTags.SMOOTHIE_INGREDIENT) && level.getBlockEntity(pos) instanceof BlenderBlockEntity blender) {
+        if (level.getBlockEntity(pos) instanceof BlenderBlockEntity blender) {
 
             int itemCount = blender.countItems(blender.getItems());
 
-            if (itemCount < 5) {
-                blender.setItem(itemCount, stack.split(1));
+            if (stack.is(PSTags.SMOOTHIE_INGREDIENT)) {
+
+                if (itemCount < 5) {
+                    blender.setItem(itemCount, stack.split(1));
+                }
             }
 
-            // don't shrink the stack because splitting does that
-            //if (!player.isCreative()) stack.shrink(1);
+            else if (!blender.isBlending() && itemCount > 0 && player.getItemInHand(hand).isEmpty()) {
+                player.addItem(blender.getItem(itemCount - 1));
+
+                blender.removeItem(itemCount - 1, 1);
+            }
 
             return InteractionResult.CONSUME;
         }
