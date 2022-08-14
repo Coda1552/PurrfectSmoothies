@@ -29,12 +29,13 @@ displayName="Purrfect Smoothies" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 #logoFile="examplemod.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+#credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
-authors="Coda, OmayPaty" #optional
+authors="Coda" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-The kitty kitty chit chat shit shat on my kitty cat'''
+
+'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.purrfectsmoothies]] #optional
     # the modid of the dependency
