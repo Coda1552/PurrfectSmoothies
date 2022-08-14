@@ -3,6 +3,7 @@ package coda.purrfectsmoothies;
 import coda.purrfectsmoothies.registry.PSBlockEntities;
 import coda.purrfectsmoothies.registry.PSBlocks;
 import coda.purrfectsmoothies.registry.PSItems;
+import coda.purrfectsmoothies.registry.PSSounds;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,6 +20,7 @@ public class PurrfectSmoothies {
         PSItems.ITEMS.register(bus);
         PSBlocks.BLOCKS.register(bus);
         PSBlockEntities.BLOCK_ENTITIES.register(bus);
+        PSSounds.SOUNDS.register(bus);
     }
 
     public static final CreativeModeTab GROUP = new CreativeModeTab(MOD_ID) {

@@ -1,0 +1,11 @@
+{
+  "block.blender_blend": {
+    "subtitle": "subtitle.purrfectsmoothies.blender_blend",
+    "sounds": [
+      {
+        "name": "purrfectsmoothies:block/blender_blend",
+        "stream": true
+      }
+    ]
+  }
+}

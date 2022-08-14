@@ -2,11 +2,13 @@ package coda.purrfectsmoothies.common.blocks.entities;
 
 import coda.purrfectsmoothies.PurrfectSmoothies;
 import coda.purrfectsmoothies.registry.PSBlockEntities;
+import coda.purrfectsmoothies.registry.PSSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -119,6 +121,9 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
                 item.moveTo(position, 0F, 0F);
 
                 blender.level.addFreshEntity(item);
+            }
+            if (blender.blendingTicks == 1) {
+                level.playSound(null, position, PSSounds.BLENDER_BLEND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             }
         }
     }
