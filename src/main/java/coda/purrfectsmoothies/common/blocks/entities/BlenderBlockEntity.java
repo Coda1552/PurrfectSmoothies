@@ -105,7 +105,7 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
 
     // todo - add isBlending
     public boolean isBlending() {
-        return !isEmpty() && getItems().size() == 5 /*&& level.hasNeighborSignal(worldPosition)*/;
+        return !isEmpty() && countItems(getItems()) == 5 /*&& level.hasNeighborSignal(worldPosition)*/;
     }
 
     public static void tick(Level level, BlockPos position, BlockState state, BlenderBlockEntity blender) {
