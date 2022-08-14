@@ -64,7 +64,8 @@ public class BlenderBlock extends BaseEntityBlock {
                 blender.setItem(itemCount, stack.split(1));
             }
 
-            if (!player.isCreative()) stack.shrink(1);
+            // we don't shrink the stack because splitting does that
+            //if (!player.isCreative()) stack.shrink(1);
 
             return InteractionResult.CONSUME;
         }
