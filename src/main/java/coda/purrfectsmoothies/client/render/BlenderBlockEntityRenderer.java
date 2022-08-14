@@ -15,8 +15,10 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
+import software.bernie.geckolib3.util.RenderUtils;
 
 public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEntity> {
     private static final float[][] TRANSFORMATIONS = new float[][] {
@@ -27,6 +29,8 @@ public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEnt
             {0.65f, 0.1f},
     };
     private final Minecraft mc = Minecraft.getInstance();
+    private MultiBufferSource renderTypeBuffer;
+    private BlenderBlockEntity animatable;
 
     public BlenderBlockEntityRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
         super(rendererDispatcherIn, new BlenderModel());
@@ -37,31 +41,45 @@ public class BlenderBlockEntityRenderer extends GeoBlockRenderer<BlenderBlockEnt
         return RenderType.entityTranslucent(textureLocation);
     }
 
-    // todo - make the items rotate
     @Override
-    public void render(BlenderBlockEntity te, float partialTicks, PoseStack ms, MultiBufferSource bufferIn, int packedLightIn) {
-        int items = te.countItems(te.getItems());
+    public void renderRecursively(GeoBone bone, PoseStack ms, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+        int items = animatable.countItems(animatable.getItems());
 
-        for (int i = 0; i < items; i++) {
+        if (bone.name.equals("bone")) {
+            for (int i = 0; i < items; i++) {
+                final float[] transformation = TRANSFORMATIONS[i];
+                final ItemStack stack = animatable.getItem(i);
 
-            final float[] transformation = TRANSFORMATIONS[i];
-            final ItemStack stack = te.getItem(i);
+                ms.pushPose();
 
-            ms.pushPose();
-            ms.translate(0.5, transformation[0], 0.5);
-//            ms.scale(0.5f, 0.5f, 0.5f);
-            ms.mulPose(Vector3f.YN.rotationDegrees(te.blendingTicks * 15));
-            ms.mulPose(Vector3f.XN.rotation(transformation[0]));
-            //ms.mulPose(Vector3f.XP.rotationDegrees(90));
+                RenderUtils.translate(bone, ms);
+                RenderUtils.moveToPivot(bone, ms);
+                RenderUtils.rotate(bone, ms);
+                RenderUtils.scale(bone, ms);
+                RenderUtils.moveBackFromPivot(bone, ms);
 
-            BakedModel model = mc.getItemRenderer().getModel(stack, null, null, 0);
-            mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GROUND, true, ms, bufferIn, packedLightIn, 0, model);
-            ms.popPose();
+                ms.translate(0.0, transformation[0] - 0.05f, 0.0);
+                ms.scale(0.5f, 0.5f, 0.5f);
+                ms.mulPose(Vector3f.YN.rotationDegrees(animatable.blendingTicks * 15));
+                ms.mulPose(Vector3f.XN.rotation(transformation[0]));
+                ms.mulPose(Vector3f.XP.rotationDegrees(90));
+
+                mc.getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.GROUND, packedLightIn, packedOverlayIn, ms, renderTypeBuffer, 0);
+                RenderType type = getRenderType(animatable, 1F, ms, renderTypeBuffer, null, packedLightIn, getTextureLocation(animatable));
+                bufferIn = renderTypeBuffer.getBuffer(type);
+
+                ms.popPose();
+            }
+
+            ms.translate(0, -0.0125, 0);
+
         }
-
-        ms.translate(0, -0.0125, 0);
-
-        super.render(te, partialTicks, ms, bufferIn, packedLightIn);
+        super.renderRecursively(bone, ms, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
     }
 
+    @Override
+    public void renderLate(BlenderBlockEntity animatable, PoseStack stackIn, float ticks, MultiBufferSource renderTypeBuffer, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float partialTicks) {
+        this.renderTypeBuffer = renderTypeBuffer;
+        this.animatable = animatable;
+    }
 }
