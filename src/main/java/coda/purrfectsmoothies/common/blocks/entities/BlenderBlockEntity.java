@@ -17,7 +17,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -36,6 +35,7 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
     private final AnimationFactory factory = new AnimationFactory(this);
     public static int slots = 5;
     public int blendingTicks;
+    private boolean blending;
 
     public BlenderBlockEntity(BlockPos pos, BlockState state) {
         super(PSBlockEntities.BLENDER.get(), pos, state);
@@ -105,12 +105,24 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
         return true;
     }
 
-    public boolean isBlending() {
-        return !isEmpty() && countItems(getItems()) == 5 /*&& level.hasNeighborSignal(worldPosition)*/;
+    public boolean shouldBlend() {
+        return canBlend() && level != null && level.hasNeighborSignal(worldPosition);
+    }
+
+    public boolean canBlend() {
+        return !isEmpty() && countItems(getItems()) == 5;
+    }
+
+    private void setBlending(boolean blending) {
+        this.blending = blending;
     }
 
     public static void tick(Level level, BlockPos position, BlockState state, BlenderBlockEntity blender) {
-        if (blender.isBlending()) {
+        if (blender.shouldBlend()) {
+            blender.setBlending(true);
+        }
+
+        if (blender.blending) {
             if (++blender.blendingTicks >= 81) {
 
                 blender.clearContent();
@@ -121,6 +133,7 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
                 item.moveTo(position, 0F, 0F);
 
                 blender.level.addFreshEntity(item);
+                blender.setBlending(false);
             }
             if (blender.blendingTicks == 1) {
                 level.playSound(null, position, PSSounds.BLENDER_BLEND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -134,7 +147,7 @@ public class BlenderBlockEntity extends RandomizableContainerBlockEntity impleme
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (isBlending()) {
+        if (blending) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.blender.blade_spin", true));
             return PlayState.CONTINUE;
         }

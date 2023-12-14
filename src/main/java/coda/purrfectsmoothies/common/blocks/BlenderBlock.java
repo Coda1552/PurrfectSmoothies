@@ -4,6 +4,8 @@ import coda.purrfectsmoothies.common.blocks.entities.BlenderBlockEntity;
 import coda.purrfectsmoothies.registry.PSBlockEntities;
 import coda.purrfectsmoothies.registry.PSTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -61,19 +63,19 @@ public class BlenderBlock extends BaseEntityBlock {
             int itemCount = blender.countItems(blender.getItems());
 
             if (stack.is(PSTags.SMOOTHIE_INGREDIENT)) {
-
                 if (itemCount < 5) {
                     blender.setItem(itemCount, stack.split(1));
+                    level.playSound(null, pos, SoundEvents.ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
             }
-
-            else if (!blender.isBlending() && itemCount > 0 && player.getItemInHand(hand).isEmpty()) {
+            else if (!blender.canBlend() && itemCount > 0 && player.getItemInHand(hand).isEmpty()) {
                 player.addItem(blender.getItem(itemCount - 1));
 
                 blender.removeItem(itemCount - 1, 1);
+                level.playSound(null, pos, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1.0F, 1.0F);
             }
+            return InteractionResult.SUCCESS;
 
-            return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }
